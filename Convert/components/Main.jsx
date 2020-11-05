@@ -9,35 +9,33 @@ import {
     Text,
     StatusBar,
   } from 'react-native';
-
-import AppBar from './AppBar';
+import InputText from './Input';
 
 
 const Main = () =>{
-    // const [text, setText] = React.useState('');
-
-    const [currentTime, setCurrentTime] = useState(0);
-    useEffect(() => {
-      fetch('http://192.168.0.14:19000/time')
-        .then((res) => res.json())
-        .then((data) => {
-          // console.log(data)
-          setCurrentTime(data.time);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }, []);
     return( 
         
-        <ScrollView>
-            <AppBar/>
-            <Text>{currentTime}</Text>
-            <Button title="hey"/>
-        </ScrollView>
+        <View style={styles.container}>
+           <StatusBar style="auto" />
+           <InputText/>
+        </View>
       
       
       )
 }
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // backgroundColor: '#393e46',
+  },
+  // button: {
+  //   height: 30,
+  //   backgroundColor: "#4ecca3",
+  //   borderRadius: 20,
+  //   width: 50,
+  //   alignSelf: "center",
+  // },
+});
 export default Main
