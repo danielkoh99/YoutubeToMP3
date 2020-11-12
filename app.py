@@ -20,29 +20,46 @@ req = {}
 def current_time():
     return {'time': time.time()}
 
-@app.route('/download',methods=["GET","POST"])
+@app.route('/download',methods=["POST"])
 def format_to_mp3():
     responseOk = {'status':200}
+    responseNotOk = {'status':500}
     # responseErr = {'status':500}
-    if request.method == 'POST':
-        reqFromApp = request.get_json()
+    # if request.method == 'POST':
+    reqFromApp = request.get_json()
+    if reqFromApp != '':
         key= "url"
         req[key]=reqFromApp['url']
-    print(req['url'])
-    
-    @after_this_request  
-    async def yuToMp3():
-        y = YouTube(req['url'])
-        # y = YouTube(str(req))
-        t = y.streams.filter(only_audio=True)
-        t[0].download(tgt_folder)
-        await asyncio.sleep(5)
-        for file in [n for n in os.listdir(tgt_folder) if re.search('mp4',n)]:
-                full_path = os.path.join(tgt_folder, file)
-                output_path = os.path.join(tgt_folder, os.path.splitext(file)[0] + '.mp3')
-                os.rename(full_path, output_path)     
-    asyncio.run(yuToMp3())
+        print(req['url'])
+        # return reqFromApp
+        async def yuToMp3():
+            y = YouTube(req['url'])
+            # y = YouTube(str(req))
+            t = y.streams.filter(only_audio=True)
+            t[0].download(tgt_folder)
+            await asyncio.sleep(5)
+            for file in [n for n in os.listdir(tgt_folder) if re.search('mp4',n)]:
+                    full_path = os.path.join(tgt_folder, file)
+                    output_path = os.path.join(tgt_folder, os.path.splitext(file)[0] + '.mp3')
+                    os.rename(full_path, output_path)     
+        asyncio.run(yuToMp3())
+    else:
+        return responseNotOk
     return responseOk
+    # @after_this_request
+    # async def yuToMp3():
+    #     # y = YouTube(response.url)
+    #     y = YouTube(req['url'])
+    #     # y = YouTube(str(req))
+    #     t = y.streams.filter(only_audio=True)
+    #     t[0].download(tgt_folder)
+    #     await asyncio.sleep(5)
+    #     for file in [n for n in os.listdir(tgt_folder) if re.search('mp4',n)]:
+    #             full_path = os.path.join(tgt_folder, file)
+    #             output_path = os.path.join(tgt_folder, os.path.splitext(file)[0] + '.mp3')
+    #             os.rename(full_path, output_path)     
+    # asyncio.run(yuToMp3())
+    # return responseOk
 
 
 # @app.route('/download',methods=["GET","POST"])
