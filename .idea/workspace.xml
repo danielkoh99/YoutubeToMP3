@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b9462631-62b1-4ebb-8e7e-2bc17187634e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Converter/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Converter/android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Converter/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Converter/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Converter/android/app/src/main/java/com/converter/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Converter/android/app/src/main/java/com/converter/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Converter/android/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/Converter/android/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Converter/components/Input.js" beforeDir="false" afterPath="$PROJECT_DIR$/Converter/components/Input.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Converter/components/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/Converter/components/Main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Converter/components/getPermission.js" beforeDir="false" afterPath="$PROJECT_DIR$/Converter/components/getPermission.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Converter/ios/Podfile" beforeDir="false" afterPath="$PROJECT_DIR$/Converter/ios/Podfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Converter/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Converter/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Converter/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Converter/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1kPm9eg1GCc9eqqK0kSYCwYHolP" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b9462631-62b1-4ebb-8e7e-2bc17187634e" name="Default Changelist" comment="" />
+      <created>1605610450835</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1605610450835</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="311" y="56" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1605610779372">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="311" y="56" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1280.680@0.0.1280.680" timestamp="1605610779372" />
+    <state x="26" y="122" width="1095" height="495" key="AVDManager" timestamp="1611403622891">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="26" y="122" width="1095" height="495" key="AVDManager/0.0.1280.680@0.0.1280.680" timestamp="1611403622891" />
+    <state x="142" y="0" key="SettingsEditor" timestamp="1606002363055">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1606002363055" />
+  </component>
+</project>

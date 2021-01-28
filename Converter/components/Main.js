@@ -1,20 +1,20 @@
 import React, {useEffect} from 'react';
 import {
-    SafeAreaView,
-    StyleSheet,
-    ScrollView,
-    View,
-    Text,
-    StatusBar,
-    PermissionsAndroid,
-  } from 'react-native';
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  StatusBar,
+  PermissionsAndroid,
+  Dimensions,
+} from 'react-native';
+import {AddButton} from './AddButton';
 // import { Button } from 'react-native-elements';
 import InputText from './Input';
-
-
-
-const Main = () =>{
-
+import {State} from '../context/Context';
+const deviceHeight = Dimensions.get('window').height;
+const Main = () => {
   // const requestFilePermissions = async () => {
   //   try {
   //     const granted = await PermissionsAndroid.requestMultiple(
@@ -39,30 +39,29 @@ const Main = () =>{
   //     console.warn(err);
   //   }
   // };
-  
-
-
-
 
   // useEffect(() => {
   //   requestFilePermissions()
   // }, [])
-    return( 
-        
-        <View style={styles.container}>
-           <StatusBar backgroundColor="black" barStyle="light-content" />
-           <InputText/>
-        </View>
-      
-      
-      )
-}
+  return (
+    // <State.Provider>
+    <View style={styles.container}>
+      <StatusBar backgroundColor="black" barStyle="light-content" />
+      <InputText />
+      {/* <AddButton /> */}
+    </View>
+    // </State.Provider>
+  );
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+
+    // borderBottomLeftRadius:80,
+    // borderBottomRightRadius:80,
     // justifyContent: 'center',
     // alignItems: 'center',
-    // backgroundColor: '#393e46',
+    backgroundColor: '#393e46',
   },
   // button: {
   //   height: 30,
@@ -72,4 +71,4 @@ const styles = StyleSheet.create({
   //   alignSelf: "center",
   // },
 });
-export default Main
+export default Main;
