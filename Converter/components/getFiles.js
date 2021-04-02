@@ -1,6 +1,11 @@
 const RNFS = require('react-native-fs');
 import {Alert} from 'react-native';
-export const fileDownload = async (fileName) => {
+import DeviceInfo from 'react-native-device-info';
+
+export const fileDownload = async (downloadUrl, originalFileName) => {
+  let uniqueId = DeviceInfo.getUniqueId();
+  console.log(downloadUrl, originalFileName);
+  // let name = DeviceInfo.getFreeDiskStorage();
   // alert(fileName);
   // await fileName;
   // const [state, setstate] = useState();
@@ -27,9 +32,22 @@ export const fileDownload = async (fileName) => {
   // if(granted){
   //
   // dialog box to ask file name
+  // fetch(`http://192.168.0.14:19000/download-file?id=${uniqueId}`)
+  //   .then((res) => console.log(res))
+  //   .then(
+  // let url = 'http://192.168.0.14:19000/download-file?id=' + uniqueId;
+  // fetch('http://192.168.0.14:19000/download-file?id=' + uniqueId)
+  // fetch('http://192.168.0.14:19000/download');
+  //   .then((res) => console.log(res))
+  //   .then((data) => alert(data))
+  //   .catch((err) => alert(err));
+  const getStorageInfo = RNFS.getFSInfo().then((info) => console.log(info));
+  console.log(getStorageInfo);
   RNFS.downloadFile({
-    fromUrl: 'http://192.168.0.14:19000/download',
-    toFile: `${RNFS.ExternalStorageDirectoryPath}/Download/${fileName}.mp3`,
+    // fromUrl: 'http://192.168.0.14:19000/download',
+    // fromUrl: url,
+    fromUrl: downloadUrl,
+    toFile: `${RNFS.ExternalStorageDirectoryPath}/Download/${originalFileName}.mp3`,
     progressInterval: 100,
     progressDivider: 10,
     background: true,
@@ -41,18 +59,27 @@ export const fileDownload = async (fileName) => {
       let formattedSize = Math.round(fileSize * 10) / 10;
       Alert.alert(
         'Download',
-        fileName + ' downloaded \n' + 'Size: ' + formattedSize + ' mb',
+        originalFileName + ' downloaded \n' + 'Size: ' + formattedSize + ' mb',
         [{text: 'OK', onPress: () => console.log('OK Pressed')}],
         {cancelable: false},
       );
+
       // open in music app
       // alert(fileName + ' downloaded \n' + 'Size: ' + formattedSize + ' mb');
     })
     .then(() => {
-      fetch('http://192.168.0.14:19000/delete').then((res) => console.log(res));
+      setTimeout(() => {
+        // fetch(`http://192.168.0.14:19000/delete?id=${uniqueId}`);
+        fetch(`https://converter.loca.lt/delete?id=${uniqueId}`, {
+          headers: {'Bypass-Tunnel-Reminder': 'true'},
+        });
+        // console.log(res),
+      }, 2000);
 
       //  fetch('http://192.168.0.14:19000/delete').then((res) =>
       //   console.log(res),
       // )}
-    });
+    })
+    .catch((err) => console.log(err));
+  // )
 };

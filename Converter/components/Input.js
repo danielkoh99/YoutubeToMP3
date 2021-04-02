@@ -8,6 +8,8 @@ import {Input, Button, Icon, Card} from 'react-native-elements';
 //   useAnimatedStyle,
 //   withTiming,
 // } from 'react-native-reanimated';
+import DeviceInfo from 'react-native-device-info';
+// import getUniqueId from 'react-native-device-info';
 import {
   View,
   Text,
@@ -18,7 +20,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import FadeInView from './Animation';
-import GetFiles, {fileDownload} from './getFiles';
+import {fileDownload} from './getFiles';
+let uniqueId = DeviceInfo.getUniqueId();
+// let name = DeviceInfo.getFreeDiskStorage();
+console.log(uniqueId);
 // import {State} from '../context/Context';
 // import fileDownload from './getFiles';
 // import {downloadFile} from 'react-native-fs';
@@ -50,6 +55,17 @@ async function requestFilePermissions() {
 }
 // const input = React.createRef();
 const InputText = () => {
+  const [url, setUrl] = useState();
+  const [validator, setValidator] = useState(true);
+  const [error, setError] = useState();
+  const [isDownloaded, setIsDownloaded] = useState(false);
+  const [responseData, setResponseData] = useState({
+    filename: '',
+    downloadUrl: '',
+  });
+  const [fileName, setfileName] = useState(responseData.filename);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isloading, setisloading] = useState(false);
   // const animation = useSharedValue(0);
   // const animatedStyle = useAnimatedStyle(() => {
   //   return {
@@ -68,39 +84,53 @@ const InputText = () => {
 
   const handleRender = () => {
     setIsVisible(true);
+    setIsDownloaded(false);
   };
   // states
-  const [url, setUrl] = useState();
-  const [validator, setValidator] = useState(true);
-  const [error, setError] = useState();
-  const [isDownloaded, setIsDownloaded] = useState(false);
-  const [fileName, setfileName] = useState('');
-  const [isVisible, setIsVisible] = useState(false);
 
+  // const [disablebutton, setdisablebutton] = useState(true);
+  // if (fileName != '') {
+  //   setdisablebutton(false);
+  // }
+  // let durl = `http://192.168.0.14:19000/download-file?id=${uniqueId}`;
   const submitFileName = () => {
-    if (fileName != '') {
-      fileDownload(fileName)
-        .then(() => {
-          wait(2000).then(setIsDownloaded(false));
-        })
-        .then(setIsVisible(false));
-    }
+    fileDownload(responseData.downloadUrl, responseData.filename)
+      .then(() => {
+        wait(2000).then(setIsDownloaded(false));
+      })
+      .then(setIsVisible(false));
   };
+  // if (fileName != '') {
+  //   fileDownload(fileName)
+  //     .then(() => {
+  //       wait(2000).then(setIsDownloaded(false));
+  //     })
+  //     .then(setIsVisible(false));
+  // }
+
   // post data to backend
   const postURLAndDownload = () => {
-    fetch('http://192.168.0.14:19000/download', {
+    // fetch('http://192.168.0.14:19000/download', {
+    fetch('https://converter.loca.lt/download', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        'Bypass-Tunnel-Reminder': 'true',
       },
-      body: JSON.stringify({url: url}),
+      body: JSON.stringify({url: url, deviceID: uniqueId}),
     })
-      .then((response) => {
-        if (JSON.stringify(response.status) === 500) {
-          alert('Internal server error');
-        }
+      .then(
+        (response) => response.json(),
+        setisloading(true),
+        setValidator(true),
+        // response.json()
+        // if (JSON.stringify(response.status) === 500) {
+        //   alert('Internal server error');
+        // }
 
+        //get resp url, must share with getFiles component
+        // console.log(response.json());
         // if (response.status === '200') {
         //   setIsDownloaded(true);
         // }
@@ -108,23 +138,23 @@ const InputText = () => {
         // response.json()
 
         // setIsVisible(false);
+      )
+      .then((result) => {
+        setResponseData({
+          filename: result.originalName,
+          downloadUrl: result.downloadUrl,
+        }),
+          setfileName(result.originalName);
+        setTimeout(() => {
+          setisloading(false);
+        }, 3000);
       })
+
       .then(() => {
-        wait(2000)
-          .then(() => {
-            setIsDownloaded(true);
-            // setIsVisible(false);
-          })
-          .then(wait(3000).then(submitFileName()));
-        // .then(() => {
-        //   if (isDownloaded === false) {
-        //     fetch('http://192.168.0.14:19000/delete').then((res) =>
-        //       console.log(res),
-        //     );
-        //   }
-        //   //  fetch('http://192.168.0.14:19000/delete').then((res) =>
-        //   //   console.log(res),
-        //   // )}
+        setIsDownloaded(true);
+        // wait(2000).then(() => {
+        //   setIsDownloaded(true);
+        //   // setIsVisible(false);
         // });
       })
       .catch((err) => alert(err));
@@ -134,7 +164,6 @@ const InputText = () => {
   const validate = (text) => {
     const inputString = 90;
     const REGEX = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/;
-    // const REGEX = /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
     let noValErr = 'Field required!';
     let longInputErr = 'Link too long';
     let shortInputErr = 'Link too short';
@@ -142,7 +171,6 @@ const InputText = () => {
     if (text === '') {
       setValidator(true);
       setError(noValErr);
-      // console.warn('Field required!')
     } else if (text.length > inputString) {
       setValidator(true);
       setError(longInputErr);
@@ -172,18 +200,21 @@ const InputText = () => {
             {isDownloaded ? (
               // <Animated.View style={animatedStyle}>
               <>
-                <ActivityIndicator animating={true} size="large" />
                 <Card style={styles.card}>
+                  <Text>Please give a name to the song</Text>
                   <Input
-                    onChangeText={(text) => {
-                      setfileName(text);
-                    }}
+                    disabled
+                    value={fileName}
+                    // onChangeText={(text) => {
+                    //   setfileName(text);
+                    // }}
                   />
 
                   <Button
                     onPress={submitFileName}
                     title="Submit"
                     color="primary"
+                    // disabled={disablebutton}
                   />
                 </Card>
               </>
@@ -213,14 +244,13 @@ const InputText = () => {
                   title="Download"
                   titleStyle={{color: 'black', fontSize: 20}}
                   onPress={postURLAndDownload}
-
-                  // loading={true}
+                  loading={isloading}
                 />
               </>
             )}
           </FadeInView>
         ) : (
-          <>
+          <FadeInView>
             <Text style={styles.text}>Click the button to add a link</Text>
             <View style={styles.bottom}>
               {/* <TouchableOpacityBase> */}
@@ -241,7 +271,7 @@ const InputText = () => {
               />
               {/* </TouchableOpacityBase> */}
             </View>
-          </>
+          </FadeInView>
         )}
       </View>
     </>
