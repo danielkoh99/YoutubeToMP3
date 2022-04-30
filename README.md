@@ -1,1 +1,1 @@
-This is an React Native app with Python Flask backend to download youtube videos to your mobile phone in MP3 format
+This is an React Native app with Python Flask backend to download youtube videos in mp3 format
